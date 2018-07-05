@@ -12,14 +12,14 @@ Run as a shell by overwriting default entrypoint and mounting current directory:
 
 Using docker-compose:
 
-    aws:
+    terraform:
         image: contino/terraform
         env_file: .env
         working_dir: /opt/app
         volumes:
         - .:/opt/app:rw
 
-    docker-compose run terraform version
+And run `docker-compose run terraform --version`
 
 ## Build 
 Update the `TERRAFORM_VERSION` in both `Makefile` and `DockerFile`. The run:
