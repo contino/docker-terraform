@@ -2,13 +2,13 @@
 Containerised Terraform CLI to ensure consistent local development and simple CD pipelines.
 
 ## Usage
-Run as a command using default `terraform` entrypoint:
+Run as a command using entrypoint:
 
-    docker run --rm contino/terraform --version
+    docker run --rm --entrypoint terraform contino/terraform --verison
 
-Run as a shell by overwriting default entrypoint and mounting current directory:
+Run as a shell and mount current directory as volumes:
 
-    docker run --rm -it -v $(pwd):/opt/app --entrypoint bash contino/terraform
+    docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app contino/terraform bash
 
 Using docker-compose:
 
@@ -16,6 +16,7 @@ Using docker-compose:
         image: contino/terraform
         env_file: .env
         working_dir: /opt/app
+        entrypoint: terraform
         volumes:
         - .:/opt/app:rw
 

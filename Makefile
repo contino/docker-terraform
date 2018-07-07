@@ -6,7 +6,7 @@ build:
 	docker build -t $(IMAGE_NAME) .
 
 shell:
-	docker run --rm -it -v ~/.aws:/root/.aws -v $(PWD):/opt/app --entrypoint bash $(IMAGE_NAME)
+	docker run --rm -it -v ~/.aws:/root/.aws -v $(shell pwd):/opt/app $(IMAGE_NAME) bash
 
 gitTag:
 	-git tag -d $(TAG)
