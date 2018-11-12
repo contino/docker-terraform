@@ -4,7 +4,7 @@ Containerised Terraform CLI with Pythyon3, GCP and AWS sdks installed.
 ## Usage
 Run as a command using entrypoint:
 
-    docker run --rm --entrypoint terraform contino/terraform --verison
+    docker run --rm --entrypoint terraform contino/terraform --version
 
 Run as a shell and mount current directory as volumes:
 
