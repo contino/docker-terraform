@@ -9,4 +9,6 @@ RUN apk add --update --no-cache make bash python3 && \
 VOLUME [ "/opt/app" ]
 WORKDIR /opt/app
 
+# overwrite base image entrypoint and set default command
+ENTRYPOINT [ "/usr/bin/env" ]
 CMD ["terraform", "--version"]
