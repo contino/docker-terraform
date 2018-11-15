@@ -4,11 +4,11 @@ Containerised Terraform CLI with Pythyon3, GCP and AWS sdks installed.
 ## Usage
 Run as a command using entrypoint:
 
-    docker run --rm --entrypoint terraform contino/terraform --version
+    docker run --rm contino/terraform --version
 
 Run as a shell and mount current directory as volumes:
 
-    docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app contino/terraform bash
+    docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app --entrypoint bash contino/terraform
 
 Using docker-compose:
 
