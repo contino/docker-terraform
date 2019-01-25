@@ -22,6 +22,12 @@ Using docker-compose:
 
 And run `docker-compose run terraform --version`
 
+.. or better, just replace your terraform executable within your system with a shell function like ;
+
+    function terraform { docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app contino/terraform "$@"; }
+    
+then run like `terraform {params} {action}` just like you are using your local `terraform` executable.
+
 ## Build 
 Update the `TERRAFORM_VERSION` in both `Makefile` and `DockerFile`. The run:
 
