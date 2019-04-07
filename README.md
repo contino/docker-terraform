@@ -1,39 +1,71 @@
 # Docker Terraform
-Containerised Terraform CLI with Pythyon3, GCP and AWS sdks installed.
+Containerised Terraform CLI with Pythyon3, GCP, AWS sdks and GOSU installed.
 
 ## Usage
-Run as a command using entrypoint:
+The below 2 examples are using the `terraform` user inside the container.
+This is explained below in [Configuration](##configuration).
 
-    docker run --rm contino/terraform --version
+### Docker
+Run as a command:
 
-Run as a shell and mount current directory as volumes:
+```bash
+docker run --rm -v ~/.aws:/home/terraform/.aws -v $(pwd):/opt/app contino/terraform --version
+```
 
-    docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app --entrypoint bash contino/terraform
-
+### Docker-Compose
 Using docker-compose:
 
-    terraform:
-        image: contino/terraform
-        env_file: .env
-        working_dir: /opt/app
-        entrypoint: terraform
-        volumes:
-        - .:/opt/app:rw
+```yaml
+terraform:
+  image: contino/terraform
+  env_file: .env
+  volumes:
+    - ~/.aws:/home/terraform/.aws
+    - .:/opt/app:rw
+```
 
 And run `docker-compose run terraform --version`
 
-.. or better, just replace your terraform executable within your system with a shell function like ;
+### Bash
+Can also set as a bash function and placed in your `~/.bashrc` or equivalent
+for quick access, with correct mounting points:
 
-    function terraform { docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/opt/app contino/terraform "$@"; }
-    
-then run like `terraform {params} {action}` just like you are using your local `terraform` executable.
+```bash
+function terraform() {
+  docker run --rm -it -v ~/.aws:/home/terraform/.aws -v $(pwd):/opt/app contino/terraform "$@";
+}
+```
 
-## Build 
-Update the `TERRAFORM_VERSION` in both `Makefile` and `DockerFile`. The run:
+Then run `terraform {params} {action}` just like you are using your local
+`terraform` executable.
 
-    make build
+## Configuration
+There are some custom configurations that can be applied to prevent the
+container from running as root and owning all your files.
+[gosu](https://github.com/tianon/gosu) is utilised to set the UID and GID of
+the custom user inside the container to whatever `/opt/app` is mounted as from
+the host.
 
-Docker Hub will automatically triger a new build.
+### Environment Variables
+Here are some quick `optional` environment variables to get you started:
+
+- `TERRAFORM_UID` - Custom UID to run terraform process as. Default will try to determine from host mount permissions (i.e. your user ID).
+- `TERRAFORM_GID` - Custom GID to run terraform process as. Default will try to determine from host mount permissions (i.e. your group ID).
+- `TERRAFORM_USER` - Custom user name to run terraform process as. Defaults to `terraform`
+- `TERRAFORM_GROUP` - Custom group name to run terraform process as. Defaults to `terraform`
+
+Remember that these variables are completely optional and that the `entrypoint.sh`
+will do its best to determine UID and GID of the user that invokes the container
+from the host machine by whatever the mount point is.
+
+## Build
+Update the `TERRAFORM_VERSION` in both `Makefile` and `DockerFile`. Then run:
+
+```
+make build
+```
+
+Docker Hub will automatically trigger a new build.
 
 ## Related Projects
 
