@@ -3,7 +3,7 @@ Containerised Terraform CLI with Pythyon3, GCP, AWS sdks and GOSU installed.
 
 ## Usage
 The below 2 examples are using the `terraform` user inside the container.
-This is explained below in [Configuration](##configuration).
+This is explained below in [Configuration](#configuration).
 
 ### Docker
 Run as a command:
