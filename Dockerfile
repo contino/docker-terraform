@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:0.11.13
+FROM hashicorp/terraform:0.12.0
 MAINTAINER "Contino APAC <delivery.au@contino.io>"
 
 RUN apk add --update --no-cache make bash python3 && \
