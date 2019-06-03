@@ -1,7 +1,7 @@
 FROM hashicorp/terraform:0.12.0
 MAINTAINER "Contino APAC <delivery.au@contino.io>"
 
-RUN apk add --update --no-cache make bash python3 && \
+RUN apk add --update --no-cache make bash python3 jq && \
     pip3 install --upgrade pip && \
     pip3 install google google-api-python-client google-auth && \
     pip3 install awscli
