@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:0.12.10
+FROM hashicorp/terraform:0.12.11
 MAINTAINER "Contino APAC <delivery.au@contino.io>"
 
 RUN apk add --update --no-cache \
