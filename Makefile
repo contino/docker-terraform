@@ -7,6 +7,10 @@ TAG = $(TERRAFORM_VERSION)
 build:
 	docker build -t $(IMAGE_NAME) .
 
+.PHONY: lint
+lint:
+	docker run --rm -i -v $(dir $(abspath $(firstword $(MAKEFILE_LIST)))):/work --workdir=/work hadolint/hadolint < Dockerfile
+
 .PHONY: test
 test:
 	docker run --rm -it --entrypoint="terraform" $(IMAGE_NAME) --version
