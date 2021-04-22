@@ -1,5 +1,5 @@
 FROM hashicorp/terraform:0.14.6
-MAINTAINER "Contino APAC <delivery.au@contino.io>"
+LABEL maintainer="Contino APAC <delivery.au@contino.io>"
 
 RUN apk add --update --no-cache \
         make \
@@ -7,16 +7,16 @@ RUN apk add --update --no-cache \
         python3 \
         py3-pip \
         jq && \
-    pip3 install --upgrade pip && \
-    pip3 install \
+    pip3 install --quiet --no-cache-dir --upgrade pip && \
+    pip3 install --quiet --no-cache-dir \
         google \
         google-api-python-client \
         google-auth \
         awscli
 
-# download and install gosu
-COPY --from=gosu/assets /opt/gosu /opt/gosu
-RUN /opt/gosu/gosu.install.sh && rm -fr /opt/gosu
+# install and test su-exec
+RUN apk add --update --no-cache su-exec && \
+    su-exec nobody true
 
 # use custom entrypoint to always use hosts user UID and GID
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

@@ -20,5 +20,5 @@ else
   adduser -S -s /bin/bash -u "${USER_ID}" -G "${GROUP_NAME}" "${USER_NAME}"
 
   # run commands with new UID and GID
-  exec gosu "${USER_NAME}" terraform "$@"
+  exec su-exec "${USER_NAME}" terraform "$@"
 fi
