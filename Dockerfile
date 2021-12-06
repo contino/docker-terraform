@@ -1,18 +1,10 @@
-FROM hashicorp/terraform:0.14.6
-MAINTAINER "Contino APAC <delivery.au@contino.io>"
+FROM hashicorp/terraform:1.0.11
+LABEL maintainer="Contino APAC <delivery.au@contino.io>"
 
-RUN apk add --update --no-cache \
-        make \
-        bash \
-        python3 \
-        py3-pip \
-        jq && \
-    pip3 install --upgrade pip && \
-    pip3 install \
-        google \
-        google-api-python-client \
-        google-auth \
-        awscli
+# Install dependencies
+RUN apk add --update --no-cache make bash python3 py3-pip jq
+RUN pip3 install --upgrade pip && \
+  pip3 install google google-api-python-client google-auth awscli
 
 # download and install gosu
 COPY --from=gosu/assets /opt/gosu /opt/gosu
