@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:1.0.11
+FROM hashicorp/terraform:1.1.4
 LABEL maintainer="Contino APAC <delivery.au@contino.io>"
 
 # Install dependencies
